@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NSubstitute;
 using NUnit.Framework;
@@ -61,8 +62,33 @@ namespace CsvViewer.Tests
             var pageData = data.GetPage(1);
 
             Assert.That(pageData.Count(), Is.EqualTo(3));
-            Assert.That(pageData.ElementAt(0), Is.EqualTo(new[] { "Peter", "42", "New York" }));
+            Assert.That(pageData.ElementAt(0), Is.EquivalentTo(new[] { "Peter", "42", "New York" }));
             Assert.That(pageData.ElementAt(2), Is.EquivalentTo(new[] {"Mary","35","Munich"}));
+        }
+
+        [Test]
+        public void GetPage_SecondPage_ReturnsRowsForDefaultPageSize()
+        {
+            var data = new CsvViewerData(_sampleDataSource);
+
+            var pageData = data.GetPage(2);
+
+            Assert.That(pageData.Count(), Is.EqualTo(3));
+            Assert.That(pageData.ElementAt(0), Is.EquivalentTo(new[] { "Jaques", "66", "Paris" }));
+            Assert.That(pageData.ElementAt(2), Is.EquivalentTo(new[] { "Stephanie", "47", "Stockholm" }));
+        }
+
+        [Test]
+        public void GetPage_ThirdPage_ReturnsLessThanPageSizeWhenOnlyOneRowLeft()
+        {
+            var data = new CsvViewerData(_sampleDataSource);
+
+            var pageData = data.GetPage(3);
+            var count = pageData.Count();
+            Assert.That(count, Is.EqualTo(1));
+            Assert.That(pageData.ElementAt(0), Is.EquivalentTo(new[] {"Nadia", "29", "Madrid"}));
+ 
+
         }
     }
 }

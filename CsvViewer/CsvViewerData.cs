@@ -6,7 +6,7 @@ namespace CsvViewer
 {
     public class CsvViewerData
     {
-        private readonly char[] _delimiters = new[] {';'};
+        private readonly char[] _delimiters = new[] { ';' };
         private readonly int _pageSize = 3;
 
         public CsvViewerData(IDataSource dataSource)
@@ -35,7 +35,8 @@ namespace CsvViewer
 
         public IEnumerable<string[]> GetPage(int pageNumber)
         {
-            return Rows.Take(_pageSize);
+            var rowsToSkip = (pageNumber - 1) * _pageSize;
+            return Rows.Skip(rowsToSkip).Take(_pageSize);
         }
     }
 }
