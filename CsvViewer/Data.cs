@@ -4,7 +4,7 @@ namespace CsvViewer
 {
     public class Data
     {
-        private string[] _rows;
+        private List<string[]> _rows = new List<string[]>();
 
         public void SetHeader(params string[] headerValues)
         {
@@ -15,15 +15,12 @@ namespace CsvViewer
 
         public IEnumerable<string[]> Rows
         {
-            get
-            {
-                return new List<string[]> {_rows};
-            }
+            get { return _rows; }
         }
 
         public void AddRow(params string[] rowValues)
         {
-            _rows = rowValues;
+            _rows.Add(rowValues);
         }
     }
 }
