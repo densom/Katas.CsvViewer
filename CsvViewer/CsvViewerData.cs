@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CsvViewer
@@ -6,6 +7,7 @@ namespace CsvViewer
     public class CsvViewerData
     {
         private readonly char[] _delimiters = new[] {';'};
+        private readonly int _pageSize = 3;
 
         public CsvViewerData(IDataSource dataSource)
         {
@@ -29,6 +31,11 @@ namespace CsvViewer
         private string[] ParseHeader()
         {
             return DataSource.GetData().First().Split(_delimiters);
+        }
+
+        public IEnumerable<string[]> GetPage(int pageNumber)
+        {
+            return Rows.Take(_pageSize);
         }
     }
 }
