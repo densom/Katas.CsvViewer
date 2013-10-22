@@ -12,7 +12,7 @@ namespace CsvViewer.Tests
         readonly List<string> _sampleData = new List<string>();
         private IDataSource _sampleDataSource;
 
-        [SetUp]
+        [TestFixtureSetUp]
         public void Setup()
         {
             _sampleData.Add("Name;Age;City");
