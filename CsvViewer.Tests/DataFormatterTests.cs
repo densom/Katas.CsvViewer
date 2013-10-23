@@ -24,5 +24,14 @@ namespace CsvViewer.Tests
             Assert.That(dataFormatter.Data, Is.EqualTo(data));
         }
 
+        [Test]
+        public void GetHeaderString_SupportsHeadersThatHaveTheLongestStrings()
+        {
+            var dataSource = CreateMockDataSource(new[] {"Name;Age;City"});
+            var dataFormatter = new DataFormatter(new Data(dataSource));
+
+            Assert.That(dataFormatter.GetHeaderString(), Is.EqualTo("Name|Age|City|"));
+        }
+
     }
 }

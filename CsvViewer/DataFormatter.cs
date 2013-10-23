@@ -8,5 +8,10 @@
         }
 
         public Data Data { get; private set; }
+
+        public string GetHeaderString()
+        {
+            return string.Join("|", Data.Header) + "|";
+        }
     }
 }
