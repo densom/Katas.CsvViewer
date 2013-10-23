@@ -87,8 +87,6 @@ namespace CsvViewer.Tests
             var count = pageData.Count();
             Assert.That(count, Is.EqualTo(1));
             Assert.That(pageData.ElementAt(0), Is.EquivalentTo(new[] {"Nadia", "29", "Madrid"}));
- 
-
         }
     }
 }

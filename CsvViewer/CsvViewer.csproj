@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataFormatter.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="IDataSource.cs" />
     <Compile Include="Program.cs" />
