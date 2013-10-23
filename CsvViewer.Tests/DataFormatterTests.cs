@@ -42,5 +42,21 @@ namespace CsvViewer.Tests
             Assert.That(dataFormatter.GetHeaderString(), Is.EqualTo("Name  |Age|"));
         }
 
+        [Test]
+        public void GetHeaderString_PadsHeadersForLongestRow_HandleLongestDataOnMultiplePages()
+        {
+            var dataSource = CreateMockDataSource(new[]
+                {
+                    "Name;Age", 
+                    "Dennis;37",
+                    "Dennis;37",
+                    "Dennis;37",
+                    "longest;00",
+                });
+            var dataFormatter = new DataFormatter(new Data(dataSource));
+
+            Assert.That(dataFormatter.GetHeaderString(), Is.EqualTo("Name  |Age|"));
+        }
+
     }
 }
