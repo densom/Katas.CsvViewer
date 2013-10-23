@@ -50,7 +50,7 @@ namespace CsvViewer
         {
             new List<string[]>();
 
-            for (int i = 0; i < Data.Rows.Count(); i++)
+            for (int i = 0; i < Data.GetPage(page).Count(); i++)
             {
                 var paddedRow = new List<string>();
 
