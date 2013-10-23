@@ -1,29 +1,19 @@
 ﻿using System.Collections.Generic;
-using NSubstitute;
+using System.Text;
 using NUnit.Framework;
 
 namespace CsvViewer.Tests
 {
     [TestFixture]
-    public class DataFormatterTests
+    public class DataFormatterTests : TestsBase
     {
-        readonly List<string> _sampleData = new List<string>();
+
         private IDataSource _sampleDataSource;
 
         [TestFixtureSetUp]
         public void Setup()
         {
-            _sampleData.Add("Name;Age;City");
-            _sampleData.Add("Peter;42;New York");
-            _sampleData.Add("Paul;57;London");
-            _sampleData.Add("Mary;35;Munich");
-            _sampleData.Add("Jaques;66;Paris");
-            _sampleData.Add("Yuri;23;Moscow");
-            _sampleData.Add("Stephanie;47;Stockholm");
-            _sampleData.Add("Nadia;29;Madrid");
-
-            _sampleDataSource = Substitute.For<IDataSource>();
-            _sampleDataSource.GetData().Returns(_sampleData);
+            _sampleDataSource = CreateMockDataSource(SampleData.DefaultDataFromKata);
         }
 
         [Test]
@@ -33,5 +23,6 @@ namespace CsvViewer.Tests
             var dataFormatter = new DataFormatter(data);
             Assert.That(dataFormatter.Data, Is.EqualTo(data));
         }
+
     }
 }
