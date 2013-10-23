@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace CsvViewer.Tests
 {
     [TestFixture]
-    public class CsvViewerDataTests
+    public class DataTests
     {
         readonly List<string> _sampleData = new List<string>();
         private IDataSource _sampleDataSource;
@@ -33,31 +33,31 @@ namespace CsvViewer.Tests
         public void Constructor_GivenIDataSource_SavesToDataSourceProperty()
         {
             var dataSource = Substitute.For<IDataSource>();
-            var csvViewerData = new CsvViewerData(dataSource);
+            var data = new Data(dataSource);
 
-            Assert.That(csvViewerData.DataSource, Is.EqualTo(dataSource));
+            Assert.That(data.DataSource, Is.EqualTo(dataSource));
         }
 
         [Test]
         public void Header_ReturnsFirstRowInDataSource()
         {
-            var csvViewerData = new CsvViewerData(_sampleDataSource);
-            Assert.That(csvViewerData.Header, Is.EquivalentTo(new[] { "Name", "Age", "City" }));
+            var data = new Data(_sampleDataSource);
+            Assert.That(data.Header, Is.EquivalentTo(new[] { "Name", "Age", "City" }));
         }
 
         [Test]
         public void Rows_FirstRow_ContainsFirstDataRow()
         {
-            var csvViewerData = new CsvViewerData(_sampleDataSource);
+            var data = new Data(_sampleDataSource);
 
-            Assert.That(csvViewerData.Rows.ElementAt(0), Is.EquivalentTo(new[] { "Peter", "42", "New York" }));
-            Assert.That(csvViewerData.Rows.ElementAt(1), Is.EquivalentTo(new[] { "Paul", "57", "London" }));
+            Assert.That(data.Rows.ElementAt(0), Is.EquivalentTo(new[] { "Peter", "42", "New York" }));
+            Assert.That(data.Rows.ElementAt(1), Is.EquivalentTo(new[] { "Paul", "57", "London" }));
         }
 
         [Test]
         public void GetPage_FirstPage_ReturnsRowsForDefaultPageSize()
         {
-            var data = new CsvViewerData(_sampleDataSource);
+            var data = new Data(_sampleDataSource);
 
             var pageData = data.GetPage(1);
 
@@ -69,7 +69,7 @@ namespace CsvViewer.Tests
         [Test]
         public void GetPage_SecondPage_ReturnsRowsForDefaultPageSize()
         {
-            var data = new CsvViewerData(_sampleDataSource);
+            var data = new Data(_sampleDataSource);
 
             var pageData = data.GetPage(2);
 
@@ -81,7 +81,7 @@ namespace CsvViewer.Tests
         [Test]
         public void GetPage_ThirdPage_ReturnsLessThanPageSizeWhenOnlyOneRowLeft()
         {
-            var data = new CsvViewerData(_sampleDataSource);
+            var data = new Data(_sampleDataSource);
 
             var pageData = data.GetPage(3);
             var count = pageData.Count();

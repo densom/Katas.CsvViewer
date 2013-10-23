@@ -4,12 +4,12 @@ using System.Linq;
 
 namespace CsvViewer
 {
-    public class CsvViewerData
+    public class Data
     {
         private readonly char[] _delimiters = new[] { ';' };
         private readonly int _pageSize = 3;
 
-        public CsvViewerData(IDataSource dataSource)
+        public Data(IDataSource dataSource)
         {
             DataSource = dataSource;
         }
