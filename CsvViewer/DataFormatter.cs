@@ -45,5 +45,23 @@ namespace CsvViewer
 
             return string.Join("+", dashList) + "+";
         }
+
+        public IEnumerable<string> GetRowStrings(int page = 1)
+        {
+            new List<string[]>();
+
+            for (int i = 0; i < Data.Rows.Count(); i++)
+            {
+                var paddedRow = new List<string>();
+
+                for (int j = 0; j < Data.Rows.ElementAt(i).Count(); j++)
+                {
+                    paddedRow.Add(Data.Rows.ElementAt(i).ElementAt(j).PadRight(GetLongestColumns(page).ElementAt(j), ' '));
+                }
+
+                yield return string.Join("|", paddedRow.ToArray()) + "|";
+
+            }
+        }
     }
 }
