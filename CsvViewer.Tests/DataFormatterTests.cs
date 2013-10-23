@@ -43,7 +43,7 @@ namespace CsvViewer.Tests
         }
 
         [Test]
-        public void GetHeaderString_PadsHeadersForLongestRow_HandleLongestDataOnMultiplePages()
+        public void GetHeaderString_PadsForLongestRow_HandleLongestDataOnMultiplePages()
         {
             var dataSource = CreateMockDataSource(new[]
                 {
@@ -56,6 +56,34 @@ namespace CsvViewer.Tests
             var dataFormatter = new DataFormatter(new Data(dataSource));
 
             Assert.That(dataFormatter.GetHeaderString(), Is.EqualTo("Name  |Age|"));
+            Assert.That(dataFormatter.GetHeaderString(2), Is.EqualTo("Name   |Age|"));
+        }
+
+        [Test]
+        public void GetHeaderSeperatorString_PadForLongestRow()
+        {
+            var dataSource = CreateMockDataSource(new[]
+                {
+                    "Name;Age", 
+                });
+            var dataFormatter = new DataFormatter(new Data(dataSource));
+
+            Assert.That(dataFormatter.GetSeparatorString(), Is.EqualTo("----+---+"));
+        }
+
+        [Test]
+        public void GetHeaderSeperatorString_PadForLongestRowOnMultiplePages()
+        {
+            var dataSource = CreateMockDataSource(new[]
+                {
+                    "Name;Age", 
+                    "Dennis;37",
+                    "Dennis;37",
+                    "longest;00",
+                });
+            var dataFormatter = new DataFormatter(new Data(dataSource));
+
+            Assert.That(dataFormatter.GetSeparatorString(), Is.EqualTo("-------+---+"));
         }
 
     }

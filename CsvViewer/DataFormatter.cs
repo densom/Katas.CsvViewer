@@ -16,25 +16,34 @@ namespace CsvViewer
         {
             var paddedHeaders = new List<string>();
 
-            int column = 0;
-            foreach (var header in Data.Header)
+            for (int i = 0; i < Data.Header.Count(); i++)
             {
-                paddedHeaders.Add(header.PadRight(GetLongestColumns().ElementAt(column), ' '));
-                column++;
+                paddedHeaders.Add(Data.Header.ElementAt(i).PadRight(GetLongestColumns(page).ElementAt(i), ' '));
             }
+
 
             return string.Join("|", paddedHeaders) + "|";
         }
 
         private IEnumerable<int> GetLongestColumns(int page = 1)
         {
-            int column = 0;
-            foreach (var header in Data.Header)
+            for (var i = 0; i < Data.Header.Count(); i++)
             {
-                var longestColumn = Data.Rows.Count() == 0 ? 0 : Data.GetPage(page).Select(r => r[column]).Max(f => f.Length);
+                var longestColumn = Data.GetPageWithHeaders(page).Select(r => r[i]).Max(f => f.Length);
                 yield return longestColumn;
-                column++;
             }
+        }
+
+        public string GetSeparatorString(int page = 1)
+        {
+            var dashList = new List<string>();
+
+            for (var i = 0; i < Data.Header.Count(); i++)
+            {
+                dashList.Add(new string('-', GetLongestColumns(page).ElementAt(i)));
+            }
+
+            return string.Join("+", dashList) + "+";
         }
     }
 }
