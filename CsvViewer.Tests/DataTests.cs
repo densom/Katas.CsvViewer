@@ -52,7 +52,7 @@ namespace CsvViewer.Tests
 
             Assert.That(pageData.Count(), Is.EqualTo(3));
             Assert.That(pageData.ElementAt(0), Is.EquivalentTo(new[] { "Peter", "42", "New York" }));
-            Assert.That(pageData.ElementAt(2), Is.EquivalentTo(new[] {"Mary","35","Munich"}));
+            Assert.That(pageData.ElementAt(2), Is.EquivalentTo(new[] { "Mary", "35", "Munich" }));
         }
 
         [Test]
@@ -75,7 +75,19 @@ namespace CsvViewer.Tests
             var pageData = data.GetPage(3);
             var count = pageData.Count();
             Assert.That(count, Is.EqualTo(1));
-            Assert.That(pageData.ElementAt(0), Is.EquivalentTo(new[] {"Nadia", "29", "Madrid"}));
+            Assert.That(pageData.ElementAt(0), Is.EquivalentTo(new[] { "Nadia", "29", "Madrid" }));
+        }
+
+        [Test]
+        public void GetPageWithHeader()
+        {
+            var data = new Data(_sampleDataSource);
+//            "Name;Age;City",
+//                    "Peter;42;New York",
+//                    "Paul;57;London",
+//                    "Mary;35;Munich",
+            Assert.That(data.GetPageWithHeaders(1).ElementAt(0), Is.EquivalentTo(new[] {"Name", "Age","City"}));
+            Assert.That(data.GetPageWithHeaders(1).ElementAt(1), Is.EquivalentTo(new[] {"Peter", "42","New York"}));
         }
     }
 }

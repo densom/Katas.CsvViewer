@@ -38,5 +38,15 @@ namespace CsvViewer
             var rowsToSkip = (pageNumber - 1) * _pageSize;
             return Rows.Skip(rowsToSkip).Take(_pageSize);
         }
+
+        public IEnumerable<string[]> GetPageWithHeaders(int pageNumber = 1)
+        {
+            yield return Header;
+
+            foreach (var row in GetPage(pageNumber))
+            {
+                yield return row;
+            }
+        }
     }
 }
