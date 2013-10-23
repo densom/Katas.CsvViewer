@@ -8,16 +8,50 @@ namespace CsvViewer
 {
     class Program
     {
+        static IDataSource dataSource = new CsvFileDataSource("persons.csv");
+
+        static DataFormatter formatter = new DataFormatter(new Data(dataSource));
+
         static void Main(string[] args)
         {
-            var dataSource = new CsvFileDataSource("persons.csv");
 
-            var formatter = new DataFormatter(new Data(dataSource));
 
-            Console.WriteLine(formatter.GetHeaderString());
-            Console.WriteLine(formatter.GetSeparatorString());
-            formatter.GetRowStrings(1).ToList().ForEach(Console.WriteLine);
 
+
+            ConsoleKey keypress;
+
+            var currentPage = 1;
+
+            WriteTable(currentPage);
+
+            do
+            {
+                keypress = Console.ReadKey().Key;
+
+                switch (keypress)
+                {
+                    case ConsoleKey.N:
+                        WriteTable(++currentPage);
+                        break;
+                    case ConsoleKey.P:
+                        WriteTable(--currentPage);
+                        break;
+                }
+
+
+
+            } while (keypress != ConsoleKey.X);
+
+        }
+
+        private static void WriteTable(int page)
+        {
+            Console.Clear();
+            Console.WriteLine(formatter.GetHeaderString(page));
+            Console.WriteLine(formatter.GetSeparatorString(page));
+            formatter.GetRowStrings(page).ToList().ForEach(Console.WriteLine);
+            Console.WriteLine();
+            Console.WriteLine("N(ext page, P(revious page, F(irst page, L(ast page, eX(it");
         }
     }
 }
