@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace CsvViewer
 {
@@ -54,14 +55,24 @@ namespace CsvViewer
             {
                 var paddedRow = new List<string>();
 
-                for (int j = 0; j < Data.Rows.ElementAt(i).Count(); j++)
+                for (int j = 0; j < Data.GetPage(page).ElementAt(i).Count(); j++)
                 {
-                    paddedRow.Add(Data.Rows.ElementAt(i).ElementAt(j).PadRight(GetLongestColumns(page).ElementAt(j), ' '));
+                    paddedRow.Add(Data.GetPage(page).ElementAt(i).ElementAt(j).PadRight(GetLongestColumns(page).ElementAt(j), ' '));
                 }
 
                 yield return string.Join("|", paddedRow.ToArray()) + "|";
 
             }
+        }
+
+        public string GetTable(int page)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine(GetHeaderString(page));
+            sb.AppendLine(GetSeparatorString(page));
+            GetRowStrings(page).ToList().ForEach(row => sb.AppendLine(row));
+
+            return sb.ToString();
         }
     }
 }
