@@ -8,8 +8,8 @@ namespace CsvViewer
 {
     class Program
     {
-        static IDataSource dataSource = new CsvFileDataSource("persons.csv");
-        static DataFormatter formatter = new DataFormatter(new Data(dataSource));
+        static readonly IDataSource DataSource = new CsvFileDataSource("persons.csv");
+        static readonly DataFormatter Formatter = new DataFormatter(new Data(DataSource));
 
         static void Main(string[] args)
         {
@@ -29,25 +29,27 @@ namespace CsvViewer
                 switch (keypress)
                 {
                     case ConsoleKey.N:
-                        WriteTable(++currentPage);
+                        currentPage++;
                         break;
                     case ConsoleKey.P:
-                        WriteTable(--currentPage);
+                        currentPage--;
                         break;
                     case ConsoleKey.F:
                         currentPage = 1;
-                        WriteTable(currentPage);
                         break;
                     case ConsoleKey.L:
                         throw new NotImplementedException("need to implement page count");
                 }
+
+                WriteTable(currentPage);
+
             } while (keypress != ConsoleKey.X);
         }
 
         private static void WriteTable(int page)
         {
             Console.Clear();
-            Console.WriteLine(formatter.GetTable(page));
+            Console.WriteLine(Formatter.GetTable(page));
             Console.WriteLine();
             Console.WriteLine("N(ext page, P(revious page, F(irst page, L(ast page, eX(it");
         }
