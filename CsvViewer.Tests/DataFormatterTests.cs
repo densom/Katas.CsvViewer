@@ -116,7 +116,38 @@ namespace CsvViewer.Tests
                 });
             var dataFormatter = new DataFormatter(new Data(dataSource));
 
-            Assert.That(dataFormatter.GetRowStrings(2).First(), Is.EqualTo("Dennis |37 |"));
+            Assert.That(dataFormatter.GetRowStrings(2).First(), Is.EqualTo("longest|00 |"));
+        }
+
+        [Test]
+        public void GetTable_SampleDataReturnsFirstPage()
+        {
+            var dataSource = CreateMockDataSource(new[]
+                {
+                    "Name;Age",
+                    "Dennis;37",
+                    "Meg;31",
+                    "Bennett;0",
+                    "Dan;34",
+                    "Kelley;39",
+
+                });
+            var dataFormatter = new DataFormatter(new Data(dataSource));
+            var expectedPage1 = 
+                "Name   |Age|\r\n" +
+                "-------+---+\r\n" +
+                "Dennis |37 |\r\n" +
+                "Meg    |31 |\r\n" +
+                "Bennett|0  |\r\n";
+
+            var expectedPage2 =
+                "Name  |Age|\r\n" +
+                "------+---+\r\n" +
+                "Dan   |34 |\r\n" +
+                "Kelley|39 |\r\n";
+
+            Assert.That(dataFormatter.GetTable(1), Is.EqualTo(expectedPage1));
+            Assert.That(dataFormatter.GetTable(2), Is.EqualTo(expectedPage2));
         }
 
     }
