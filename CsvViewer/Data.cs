@@ -23,6 +23,19 @@ namespace CsvViewer
             get { return ParseRows(); }
         }
 
+        public int PageCount
+        {
+            get
+            {
+                var pages = Rows.Count() / _pageSize;
+                if (Rows.Count() % _pageSize > 0)
+                {
+                    pages++;
+                }
+                return pages;
+            }
+        }
+
         private IEnumerable<string[]> ParseRows()
         {
             return DataSource.GetData().Skip(1).Select(r => r.Split(_delimiters));

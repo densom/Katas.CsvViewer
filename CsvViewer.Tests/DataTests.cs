@@ -82,12 +82,17 @@ namespace CsvViewer.Tests
         public void GetPageWithHeader()
         {
             var data = new Data(_sampleDataSource);
-//            "Name;Age;City",
-//                    "Peter;42;New York",
-//                    "Paul;57;London",
-//                    "Mary;35;Munich",
+
             Assert.That(data.GetPageWithHeaders(1).ElementAt(0), Is.EquivalentTo(new[] {"Name", "Age","City"}));
             Assert.That(data.GetPageWithHeaders(1).ElementAt(1), Is.EquivalentTo(new[] {"Peter", "42","New York"}));
+        }
+
+        [Test]
+        public void PageCount_For7DataRows_Returns3()
+        {
+            var data = new Data(_sampleDataSource);
+
+            Assert.That(data.PageCount, Is.EqualTo(3));
         }
     }
 }
