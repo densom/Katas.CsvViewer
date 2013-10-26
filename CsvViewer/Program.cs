@@ -1,37 +1,38 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CsvViewer
 {
     class Program
     {
-        private static IDataSource _dataSource;
+        private const string DefaultDataFile = "persons.csv";
         static DataFormatter _formatter;
 
         static void Main(string[] args)
         {
-            SetDataSource(args);
+            _formatter = CreateFormatter(args);
 
             WriteTable(1);
             KeypressLoop();
         }
 
-        private static void SetDataSource(string[] args)
+        private static string GetFileName(IList<string> args)
         {
-            var file = "persons.csv";
+            var file = DefaultDataFile;
 
             if (args.Any())
             {
                 file = args[0];
             }
 
-            _formatter = CreateFormatter(file);
+            return file;
         }
 
-        private static DataFormatter CreateFormatter(string file)
+        private static DataFormatter CreateFormatter(string[] args)
         {
-            _dataSource = new CsvFileDataSource(file);
-            return new DataFormatter(new Data(_dataSource));
+            var dataSource = new CsvFileDataSource(GetFileName(args));
+            return new DataFormatter(new Data(dataSource));
         }
 
         private static void KeypressLoop()
